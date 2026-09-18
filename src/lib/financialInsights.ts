@@ -60,12 +60,21 @@ export function generateFinancialInsights(
   const topCategory = getTopExpenseCategory(transactions);
 
   if (topCategory) {
-    insights.push({
-      type: "info",
-      title: `Highest spending: ${topCategory.name}`,
-      message:
-        `${topCategory.name} accounts for ${topCategory.percentage.toFixed(1)}% of your recorded expenses.`,
-    });
+    if (topCategory.percentage > 40) {
+      insights.push({
+        type: "warning",
+        title: `High spending: ${topCategory.name}`,
+        message:
+          `${topCategory.name} accounts for ${topCategory.percentage.toFixed(1)}% of your recorded expenses. Consider reviewing this category and looking for ways to reduce unnecessary spending.`,
+      });
+    } else {
+      insights.push({
+        type: "info",
+        title: `Highest spending: ${topCategory.name}`,
+        message:
+          `${topCategory.name} accounts for ${topCategory.percentage.toFixed(1)}% of your recorded expenses.`,
+      });
+    }
   }
 
   const averageExpense = getAverageExpense(transactions);
