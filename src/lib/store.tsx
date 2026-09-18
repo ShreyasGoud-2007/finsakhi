@@ -3,9 +3,10 @@
 import {
   createContext, useCallback, useContext, useEffect, useMemo, useState,
 } from "react";
-import { DEMO_GOALS, DEMO_TRANSACTIONS, DEMO_USER } from "./mock-data";
+import { DEMO_USER } from "./mock-data";
 import * as goalService from "./services/goalService";
 import * as txService from "./services/transactionService";
+import { getCurrentUser } from "./services/authService";
 import { getCategoryTotals, getSummary } from "./calculations";
 import { t as translate, type TranslationKey } from "./i18n";
 import type {
@@ -50,42 +51,60 @@ const DEFAULT_PREFS: Prefs = {
 const STORAGE_KEY = "finsakhi.state.v1";
 
 export function StoreProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User>(DEMO_USER);
-  const [transactions, setTransactions] = useState<Transaction[]>(DEMO_TRANSACTIONS);
-  const [goals, setGoals] = useState<SavingsGoal[]>(DEMO_GOALS);
+const [user, setUser] = useState<User>(DEMO_USER);
+const [transactions, setTransactions] = useState<Transaction[]>([]);
+const [goals, setGoals] = useState<SavingsGoal[]>([]);
   const [prefs, setPrefsState] = useState<Prefs>(DEFAULT_PREFS);
   const [loading, setLoading] = useState(true);
 
   // Load persisted demo state, then hydrate from the service layer.
   useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const raw = window.localStorage.getItem(STORAGE_KEY);
-        if (raw) {
-          const saved = JSON.parse(raw);
-          if (!cancelled) {
-            if (saved.user) setUser(saved.user);
-            if (saved.transactions) setTransactions(saved.transactions);
-            if (saved.goals) setGoals(saved.goals);
-            if (saved.prefs) setPrefsState({ ...DEFAULT_PREFS, ...saved.prefs });
-          }
-        } else {
-          const [tx, gl] = await Promise.all([
-            txService.getTransactions(DEMO_USER.id),
-            goalService.getSavingsGoals(DEMO_USER.id),
-          ]);
-          if (!cancelled) { setTransactions(tx); setGoals(gl); }
-        }
-      } catch {
-        /* demo state is best-effort; fall back to the seeded data */
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-    return () => { cancelled = true; };
-  }, []);
+  let cancelled = false;
 
+  (async () => {
+    try {
+      const currentUser = await getCurrentUser();
+
+      if (!currentUser) {
+        if (!cancelled) {
+          setUser(DEMO_USER);
+          setTransactions([]);
+          setGoals([]);
+        }
+        return;
+      }
+
+      if (!cancelled) {
+        setUser(currentUser);
+      }
+
+      const [tx, gl] = await Promise.all([
+        txService.getTransactions(currentUser.id),
+        goalService.getSavingsGoals(currentUser.id),
+      ]);
+
+      if (!cancelled) {
+        setTransactions(tx);
+        setGoals(gl);
+      }
+    } catch (error) {
+      console.error("Failed to load user data:", error);
+
+      if (!cancelled) {
+        setTransactions([]);
+        setGoals([]);
+      }
+    } finally {
+      if (!cancelled) {
+        setLoading(false);
+      }
+    }
+  })();
+
+  return () => {
+    cancelled = true;
+  };
+}, []);
   useEffect(() => {
     if (loading) return;
     try {

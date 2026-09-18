@@ -15,7 +15,7 @@ import { ProgressBar } from "@/components/ui/ProgressBar";
 import { EmptyState, LoadingState } from "@/components/ui/States";
 import { getCategoryTotals, getSummary, goalProgress, monthsRemaining, sortByDateDesc } from "@/lib/calculations";
 import { greeting, rupees } from "@/lib/format";
-import { buildInsight } from "@/lib/services/aiService";
+import { generateFinancialInsights } from "@/lib/financialInsights";
 import { useStore } from "@/lib/store";
 import type { Transaction } from "@/lib/types";
 
@@ -27,7 +27,12 @@ export default function DashboardPage() {
   const summary = useMemo(() => getSummary(transactions), [transactions]);
   const categories = useMemo(() => getCategoryTotals(transactions), [transactions]);
   const recent = useMemo(() => sortByDateDesc(transactions).slice(0, 5), [transactions]);
-  const insight = useMemo(() => buildInsight(financialContext), [financialContext]);
+  const insights = useMemo(
+  () => generateFinancialInsights(transactions, goals),
+  [transactions, goals]
+);
+
+const insight = insights[0]?.message ?? "Add some financial activity to receive personalized insights.";
   const activeGoal = goals[0];
 
   if (loading) return <LoadingState />;
