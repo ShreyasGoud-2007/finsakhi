@@ -1,0 +1,282 @@
+/**
+ * StaggeredMenu — React Bits (JS-CSS variant)
+ * Source: https://github.com/DavidHDev/react-bits
+ * License: MIT + Commons Clause
+ *
+ * FinSakhi overrides applied:
+ *  - menu item font-size reduced from 3.5rem to 2rem (readable on mobile)
+ *  - panel bg = cream white (#FAF9F5)
+ *  - item text color = dark teal (#173B36)
+ *  - uppercase removed from items
+ *  - letter-spacing normalised
+ *  - accent color = FinSakhi teal (#0F766E)
+ */
+
+/* ── wrapper ── */
+.staggered-menu-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 200;          /* above navbar z-index:100 */
+  pointer-events: none;
+}
+
+.staggered-menu-wrapper.fixed-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 200;
+  overflow: hidden;
+}
+
+/* ── header strip ── */
+.staggered-menu-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;   /* toggle aligned right */
+  padding: 14px 20px;
+  background: transparent;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.staggered-menu-header > * {
+  pointer-events: auto;
+}
+
+/* hide the logo inside StaggeredMenu (FinSakhi uses its own navbar brand) */
+.sm-logo { display: none; }
+
+/* ── toggle button ── */
+.sm-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #173B36;
+  line-height: 1;
+  overflow: visible;
+  padding: 8px 12px;
+  border-radius: 50px;
+  transition: background .18s;
+}
+
+.sm-toggle:hover   { background: #EAF5F1; }
+.sm-toggle:focus-visible {
+  outline: 2px solid #0F766E;
+  outline-offset: 3px;
+  border-radius: 50px;
+}
+
+/* text cycle */
+.sm-toggle-textWrap {
+  position: relative;
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.sm-toggle-textInner {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+.sm-toggle-line {
+  display: block;
+  height: 1em;
+  line-height: 1;
+}
+
+/* icon (plus → ×) */
+.sm-icon {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+.sm-icon-line {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+
+/* hidden; upstream uses .sm-line for something else */
+.sm-line { display: none !important; }
+
+/* ── pre-layers (colour sweep) ── */
+.sm-prelayers {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: clamp(260px, 85vw, 400px);
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+}
+[data-position='left'] .sm-prelayers { right: auto; left: 0; }
+
+.sm-prelayer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  transform: translateX(0);
+  opacity: 0;
+}
+
+/* ── panel ── */
+.staggered-menu-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: clamp(260px, 85vw, 400px);
+  height: 100%;
+  /* FinSakhi cream background */
+  background: #FAF9F5;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-left: 1px solid rgba(15,118,110,.12);
+  display: flex;
+  flex-direction: column;
+  padding: 72px 32px 32px;
+  overflow-y: auto;
+  z-index: 10;
+  pointer-events: auto;
+  opacity: 0;       /* GSAP controls visibility */
+  box-shadow: -4px 0 32px rgba(15,118,110,.10);
+}
+[data-position='left'] .staggered-menu-panel { right: auto; left: 0; border-left: none; border-right: 1px solid rgba(15,118,110,.12); }
+
+.sm-panel-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* ── nav items ── */
+.sm-panel-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sm-panel-itemWrap {
+  position: relative;
+  overflow: hidden;
+  line-height: 1;
+  border-bottom: 1px solid rgba(15,118,110,.08);
+}
+
+.sm-panel-item {
+  position: relative;
+  display: block;
+  color: #173B36;          /* FinSakhi dark teal */
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 1.6rem;       /* reduced from 3.5rem */
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  text-transform: none;    /* remove uppercase */
+  text-decoration: none;
+  padding: 14px 0;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.sm-panel-item:hover { color: #0F766E; }
+
+.sm-panel-itemLabel {
+  display: inline-block;
+  will-change: transform;
+  transform-origin: 50% 100%;
+}
+
+/* FinSakhi accent for hover */
+.sm-panel-item:hover {
+  color: var(--sm-accent, #0F766E);
+}
+
+/* item numbering (disabled by default in FinSakhi config) */
+.sm-panel-list[data-numbering] {
+  counter-reset: smItem;
+}
+.sm-panel-list[data-numbering] .sm-panel-item::after {
+  counter-increment: smItem;
+  content: counter(smItem, decimal-leading-zero);
+  position: absolute;
+  top: 0.2em;
+  right: 0;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--sm-accent, #0F766E);
+  letter-spacing: 0;
+  pointer-events: none;
+  user-select: none;
+  opacity: var(--sm-num-opacity, 0);
+}
+
+/* socials (hidden in FinSakhi config) */
+.sm-socials { margin-top: auto; padding-top: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
+.sm-socials-title { margin: 0; font-size: 1rem; font-weight: 500; color: var(--sm-accent, #0F766E); }
+.sm-socials-list  { list-style: none; margin: 0; padding: 0; display: flex; gap: 1rem; flex-wrap: wrap; }
+.sm-socials-link  { font-size: 1rem; font-weight: 500; color: #173B36; text-decoration: none; transition: color .2s; }
+.sm-socials-link:hover { color: #0F766E; }
+.sm-socials-link:focus-visible { outline: 2px solid #0F766E; outline-offset: 3px; }
+
+/* ── reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .staggered-menu-panel,
+  .sm-prelayer,
+  .sm-panel-itemLabel { transition: none !important; }
+}
+
+/* button-style item (used for Get Started in FinSakhi nav) */
+.sm-panel-item--btn {
+  background: none;
+  border: none;
+  text-align: left;
+  width: 100%;
+  padding: 14px 0;
+  color: #0F766E;       /* teal to distinguish from regular links */
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  cursor: pointer;
+  transition: color .2s;
+}
+.sm-panel-item--btn:hover { color: #173B36; }
+.sm-panel-item--btn:focus-visible {
+  outline: 2px solid #0F766E;
+  outline-offset: 3px;
+  border-radius: 4px;
+}

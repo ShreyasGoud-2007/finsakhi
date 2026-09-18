@@ -1,0 +1,26 @@
+/**
+ * CardSwap — React Bits (JS-CSS variant)
+ * Source: https://github.com/DavidHDev/react-bits
+ * License: MIT + Commons Clause
+ * FinSakhi overrides: default black bg removed, border uses brand color.
+ */
+.card-swap-container {
+  position: relative;
+  perspective: 900px;
+  overflow: visible;
+}
+
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 16px;
+  /* FinSakhi: white bg + teal border (not the default black) */
+  border: 1.5px solid #D5E5DF;
+  background: #FFFFFF;
+  transform-style: preserve-3d;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 4px 24px rgba(15,118,110,.10);
+}
