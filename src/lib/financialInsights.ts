@@ -2,9 +2,12 @@ import {
   getSummary,
   getTopExpenseCategory,
   getAverageExpense,
+  goalProgress,
+  monthsRemaining,
+  getRemainingAmount,
 } from "./calculations";
 
-import type { Transaction } from "./types";
+import type { Transaction, SavingsGoal } from "./types";
 
 export interface FinancialInsight {
   type: "positive" | "warning" | "info";
@@ -13,7 +16,8 @@ export interface FinancialInsight {
 }
 
 export function generateFinancialInsights(
-  transactions: Transaction[]
+  transactions: Transaction[],
+  goals: SavingsGoal[] = []
 ): FinancialInsight[] {
   const insights: FinancialInsight[] = [];
 
@@ -73,6 +77,38 @@ export function generateFinancialInsights(
       message:
         `Your average recorded expense is ₹${averageExpense.toFixed(0)}.`,
     });
+  }
+
+  if (goals.length > 0) {
+    const goal = goals[0];
+    const progress = goalProgress(goal);
+    const remaining = getRemainingAmount(goal);
+    const months = monthsRemaining(goal);
+
+    if (remaining === 0) {
+      insights.push({
+        type: "positive",
+        title: `Goal completed: ${goal.name}`,
+        message:
+          `You have reached your savings goal of ₹${goal.targetAmount.toFixed(0)}.`,
+      });
+    } else if (progress >= 75) {
+      insights.push({
+        type: "positive",
+        title: `Almost there: ${goal.name}`,
+        message:
+          `You have completed ${progress.toFixed(0)}% of your goal. ` +
+          `Only ₹${remaining.toFixed(0)} is remaining.`,
+      });
+    } else if (months !== null) {
+      insights.push({
+        type: "info",
+        title: `Savings goal: ${goal.name}`,
+        message:
+          `You have completed ${progress.toFixed(0)}% of your goal. ` +
+          `₹${remaining.toFixed(0)} is remaining, which is about ${months} month${months === 1 ? "" : "s"} at your current monthly contribution.`,
+      });
+    }
   }
 
   return insights;
