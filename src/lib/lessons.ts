@@ -1,6 +1,9 @@
 import type { FinancialLesson, LessonCategory } from "./types";
 
-export const LESSON_CATEGORIES: { id: LessonCategory | "all"; label: string }[] = [
+export const LESSON_CATEGORIES: {
+  id: LessonCategory | "all";
+  label: string;
+}[] = [
   { id: "all", label: "All topics" },
   { id: "basics", label: "Basics" },
   { id: "saving", label: "Saving" },
@@ -13,7 +16,8 @@ export const LESSONS: FinancialLesson[] = [
   {
     id: "savings-account",
     title: "What is a Savings Account?",
-    summary: "A safe place in a bank to keep money you do not need today.",
+    summary:
+      "A safe place in a bank to keep money you do not need today.",
     category: "basics",
     icon: "PiggyBank",
     explanation:
@@ -31,7 +35,8 @@ export const LESSONS: FinancialLesson[] = [
   {
     id: "interest",
     title: "What is Interest?",
-    summary: "Extra money you earn on savings, or extra money you pay on a loan.",
+    summary:
+      "Extra money you earn on savings, or extra money you pay on a loan.",
     category: "basics",
     icon: "Percent",
     explanation:
@@ -49,7 +54,8 @@ export const LESSONS: FinancialLesson[] = [
   {
     id: "budget",
     title: "What is a Budget?",
-    summary: "A simple plan for what your money will do this month.",
+    summary:
+      "A simple plan for what your money will do this month.",
     category: "basics",
     icon: "ClipboardList",
     explanation:
@@ -67,7 +73,8 @@ export const LESSONS: FinancialLesson[] = [
   {
     id: "emergency-fund",
     title: "What is an Emergency Fund?",
-    summary: "Money kept aside only for sudden, unexpected needs.",
+    summary:
+      "Money kept aside only for sudden, unexpected needs.",
     category: "saving",
     icon: "ShieldCheck",
     explanation:
@@ -85,7 +92,8 @@ export const LESSONS: FinancialLesson[] = [
   {
     id: "loan",
     title: "What is a Loan?",
-    summary: "Money you borrow now and repay later, with interest.",
+    summary:
+      "Money you borrow now and repay later, with interest.",
     category: "borrowing",
     icon: "Landmark",
     explanation:
@@ -103,7 +111,8 @@ export const LESSONS: FinancialLesson[] = [
   {
     id: "insurance",
     title: "What is Insurance?",
-    summary: "A small regular payment that protects you from a big loss.",
+    summary:
+      "A small regular payment that protects you from a big loss.",
     category: "protection",
     icon: "Umbrella",
     explanation:
@@ -121,7 +130,8 @@ export const LESSONS: FinancialLesson[] = [
   {
     id: "fixed-deposit",
     title: "What is a Fixed Deposit?",
-    summary: "Money locked in a bank for a fixed time at a fixed interest rate.",
+    summary:
+      "Money locked in a bank for a fixed time at a fixed interest rate.",
     category: "saving",
     icon: "Lock",
     explanation:
@@ -139,7 +149,8 @@ export const LESSONS: FinancialLesson[] = [
   {
     id: "mutual-fund",
     title: "What is a Mutual Fund?",
-    summary: "Many people's money invested together by a trained manager.",
+    summary:
+      "Many people's money invested together by a trained manager.",
     category: "investing",
     icon: "TrendingUp",
     explanation:
@@ -157,7 +168,8 @@ export const LESSONS: FinancialLesson[] = [
   {
     id: "inflation",
     title: "What is Inflation?",
-    summary: "The same money buys less than it did before.",
+    summary:
+      "The same money buys less than it did before.",
     category: "basics",
     icon: "Flame",
     explanation:
@@ -175,7 +187,8 @@ export const LESSONS: FinancialLesson[] = [
   {
     id: "diversification",
     title: "What is Diversification?",
-    summary: "Do not keep all your money in one place.",
+    summary:
+      "Do not keep all your money in one place.",
     category: "investing",
     icon: "Layers",
     explanation:
@@ -188,6 +201,26 @@ export const LESSONS: FinancialLesson[] = [
       "Never put all savings into one scheme, however trusted the person is.",
       "Keep some money easy to reach at all times.",
       "If a scheme promises to double money quickly, walk away.",
+    ],
+  },
+  {
+    id: "digital-banking-safety",
+    title: "How to Stay Safe with Digital Payments?",
+    summary:
+      "Simple habits to protect your money when using UPI and digital banking.",
+    category: "protection",
+    icon: "Smartphone",
+    explanation:
+      "Digital payments are convenient, but you should always check who you are paying before approving a payment. Your UPI PIN is used to send money, not to receive it. Never share your UPI PIN, ATM PIN, password or OTP with anyone.",
+    example:
+      "Meena receives a message saying she has won ₹5,000 and must scan a QR code to receive the money. She does not scan it because scanning a payment QR code and entering a UPI PIN can send money from her account.",
+    whyItMatters:
+      "A payment made using your PIN can be difficult to reverse. Taking a few seconds to check the name, amount and payment request can protect your savings.",
+    remember: [
+      "Never share your UPI PIN, ATM PIN, password or OTP.",
+      "A UPI PIN is used to send money, not to receive money.",
+      "Check the recipient name and amount before approving a payment.",
+      "Do not trust unknown links, QR codes or phone numbers claiming to be customer support.",
     ],
   },
 ];
