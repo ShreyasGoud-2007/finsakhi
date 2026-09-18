@@ -64,8 +64,7 @@ export default function DashboardPage() {
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-brand-700">{t("dashboard.monthlyOverview")}</p>
             <h1 className="mt-2 font-display text-3xl font-extrabold tracking-tight text-ink-900 sm:text-4xl">
-              {greeting(prefs.language)}, {user.name}{" "}
-              <span aria-hidden="true">👋</span>
+              {greeting(prefs.language)}, {user.name}
             </h1>
             <p className="mt-2 max-w-readable text-lg text-ink-700">
               {t("label.subtitle")}
