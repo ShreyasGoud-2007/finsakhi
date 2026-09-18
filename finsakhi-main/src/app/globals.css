@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --step: 1rem; /* base font size, raised by the "Larger text" setting */
+}
+
+html { font-size: var(--step); }
+html.text-large { --step: 1.175rem; }
+
+body {
+  @apply bg-cream text-ink-900 font-sans antialiased;
+}
+
+/* Everything is reachable and visible by keyboard. */
+:focus-visible {
+  outline: 3px solid #0F7264;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white rounded-2xl border border-ink-300/25 shadow-card;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl font-semibold
+           px-5 py-3 text-base transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+    min-height: 48px; /* large touch target */
+  }
+  .btn-primary { @apply btn bg-brand-600 text-white hover:bg-brand-700; }
+  .btn-secondary { @apply btn bg-white text-brand-700 border-2 border-brand-200 hover:bg-brand-50; }
+  .btn-ghost { @apply btn bg-transparent text-ink-700 hover:bg-brand-50; }
+  .field {
+    @apply w-full rounded-xl border-2 border-ink-300/40 bg-white px-4 py-3 text-base
+           placeholder:text-ink-500 focus:border-brand-500 focus:outline-none;
+    min-height: 48px;
+  }
+  .label { @apply block mb-1.5 font-semibold text-ink-900; }
+  .chip {
+    @apply inline-flex items-center gap-2 rounded-full border-2 px-4 py-2 text-sm font-semibold
+           transition-colors;
+    min-height: 42px;
+  }
+  .chip-on { @apply chip bg-brand-600 border-brand-600 text-white; }
+  .chip-off { @apply chip bg-white border-ink-300/40 text-ink-700 hover:border-brand-300; }
+  .section-title { @apply font-display text-2xl sm:text-3xl font-bold text-ink-900; }
+}
+
+/* Simple View strips decoration so the numbers stay in front. */
+html.simple-view .decorative { display: none !important; }
+html.simple-view .card { @apply shadow-none border-ink-300/50; }
