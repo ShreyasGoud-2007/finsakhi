@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import { useStore } from "@/lib/store";
+import BlurText from "@/components/ui/BlurText";
 
 export function AuthShell({
   title, subtitle, children, footer,
@@ -19,8 +20,23 @@ export function AuthShell({
       <main id="main" className="flex-1 px-5 pb-12 flex items-start sm:items-center justify-center">
         <div className="w-full max-w-md">
           <div className="card p-6 sm:p-8">
-            <h1 className="font-display text-3xl font-extrabold tracking-tight">{title}</h1>
-            <p className="text-ink-700 mt-1.5">{subtitle}</p>
+            <h1 className="font-display text-3xl font-extrabold tracking-tight">
+              <BlurText
+                key={`auth-title-${title}`}
+                text={title}
+                as="span"
+                className="font-inherit"
+                delay={70}
+                stepDuration={0.3}
+              />
+            </h1>
+            <BlurText
+              key={`auth-subtitle-${subtitle}`}
+              text={subtitle}
+              className="text-ink-700 mt-1.5"
+              delay={45}
+              stepDuration={0.3}
+            />
             <div className="mt-6">{children}</div>
           </div>
           <div className="mt-5 text-center">{footer}</div>

@@ -1,5 +1,6 @@
 import { AlertCircle, Loader2, type LucideIcon } from "lucide-react";
 import { useStore } from "@/lib/store";
+import BlurText from "@/components/ui/BlurText";
 
 export function EmptyState({
   icon: Icon, title, message, action,
@@ -9,7 +10,9 @@ export function EmptyState({
       <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-50 text-brand-600 mb-4">
         <Icon size={28} aria-hidden="true" />
       </span>
-      <h3 className="font-display text-xl font-bold">{title}</h3>
+      <h3 className="font-display text-xl font-bold">
+        <BlurText key={`empty-state-${title}`} text={title} as="span" className="font-inherit" delay={70} stepDuration={0.3} />
+      </h3>
       <p className="text-ink-700 mt-1.5 mx-auto max-w-readable">{message}</p>
       {action && <div className="mt-5 flex justify-center">{action}</div>}
     </div>

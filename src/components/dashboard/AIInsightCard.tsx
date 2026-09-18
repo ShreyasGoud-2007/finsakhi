@@ -5,6 +5,7 @@ import { ArrowRight, CheckCircle2, Info, ShieldAlert, Sparkles } from "lucide-re
 import { getLocalizedDemoText } from "@/lib/i18n";
 import type { FinancialInsight } from "@/lib/financialInsights";
 import { useStore } from "@/lib/store";
+import BlurText from "@/components/ui/BlurText";
 
 const toneStyles = {
   positive: {
@@ -63,7 +64,7 @@ export function AIInsightCard({
             <Sparkles size={22} aria-hidden="true" />
           </span>
           <h2 id="ai-insight-heading" className="font-display text-xl sm:text-2xl font-bold">
-            {title}
+            <BlurText key={`insight-heading-${resolvedTitle}`} text={resolvedTitle} as="span" className="font-inherit" delay={70} stepDuration={0.3} />
           </h2>
         </div>
         <Link href={ctaHref} className="hidden sm:inline-flex items-center gap-1.5 font-semibold text-brand-700">

@@ -7,6 +7,7 @@ import { CategoryIcon } from "@/components/ui/CategoryIcon";
 import { getLocalizedRemember, getLocalizedString } from "@/lib/i18n";
 import { getLesson } from "@/lib/lessons";
 import { useStore } from "@/lib/store";
+import BlurText from "@/components/ui/BlurText";
 
 export default function LessonPage({ params }: { params: { id: string } }) {
   const lesson = getLesson(params.id);
@@ -32,7 +33,7 @@ export default function LessonPage({ params }: { params: { id: string } }) {
         </span>
         <div>
           <h1 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight">
-            {title}
+            <BlurText key={`lesson-title-${title}`} text={title} as="span" className="font-inherit" delay={70} stepDuration={0.3} />
           </h1>
           <p className="text-ink-700 mt-1.5 text-lg">{summary}</p>
         </div>
@@ -40,7 +41,7 @@ export default function LessonPage({ params }: { params: { id: string } }) {
 
       <div className="mt-8 space-y-6">
         <section>
-          <h2 className="section-title">{t("lesson.inSimpleWords")}</h2>
+          <h2 className="section-title"><BlurText key={`lesson-simple-${t("lesson.inSimpleWords")}`} text={t("lesson.inSimpleWords")} as="span" className="font-inherit" delay={70} stepDuration={0.3} /></h2>
           <p className="mt-2 text-[1.08rem] leading-relaxed text-ink-900 max-w-readable">
             {explanation}
           </p>
@@ -48,14 +49,14 @@ export default function LessonPage({ params }: { params: { id: string } }) {
 
         <section className="rounded-2xl border-2 border-gold/30 bg-gold-soft p-5">
           <h2 className="flex items-center gap-2 font-display text-xl font-bold">
-            <Quote size={20} className="text-gold" aria-hidden="true" /> {t("lesson.example")}
+            <Quote size={20} className="text-gold" aria-hidden="true" /> <BlurText key={`lesson-example-${t("lesson.example")}`} text={t("lesson.example")} as="span" className="font-inherit" delay={70} stepDuration={0.3} />
           </h2>
           <p className="mt-2 text-[1.05rem] leading-relaxed max-w-readable">{example}</p>
         </section>
 
         <section>
           <h2 className="flex items-center gap-2 section-title">
-            <Lightbulb size={24} className="text-brand-600" aria-hidden="true" /> {t("lesson.whyItMatters")}
+            <Lightbulb size={24} className="text-brand-600" aria-hidden="true" /> <BlurText key={`lesson-why-${t("lesson.whyItMatters")}`} text={t("lesson.whyItMatters")} as="span" className="font-inherit" delay={70} stepDuration={0.3} />
           </h2>
           <p className="mt-2 text-[1.08rem] leading-relaxed text-ink-900 max-w-readable">
             {whyItMatters}
@@ -64,7 +65,7 @@ export default function LessonPage({ params }: { params: { id: string } }) {
 
         <section className="card p-5">
           <h2 className="flex items-center gap-2 font-display text-xl font-bold">
-            <ListChecks size={20} className="text-brand-600" aria-hidden="true" /> {t("lesson.remember")}
+            <ListChecks size={20} className="text-brand-600" aria-hidden="true" /> <BlurText key={`lesson-remember-${t("lesson.remember")}`} text={t("lesson.remember")} as="span" className="font-inherit" delay={70} stepDuration={0.3} />
           </h2>
           <ul className="mt-3 space-y-2.5">
             {remember.map((r, i) => (

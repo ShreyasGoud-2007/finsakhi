@@ -8,6 +8,7 @@ import { SuggestedQuestion } from "./SuggestedQuestion";
 import { sendMessage } from "@/lib/services/aiService";
 import { useStore } from "@/lib/store";
 import type { ChatMessage as Msg } from "@/lib/types";
+import BlurText from "@/components/ui/BlurText";
 
 export function AssistantChat() {
   const params = useSearchParams();
@@ -107,8 +108,16 @@ export function AssistantChat() {
         </span>
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.12em] text-brand-700">{t("assistant.aiHelper")}</p>
-          <h1 className="font-display text-3xl font-extrabold tracking-tight text-ink-900">{t("assistant.title")}</h1>
-          <p className="text-ink-700">{t("assistant.subtitle")}</p>
+          <h1 className="font-display text-3xl font-extrabold tracking-tight text-ink-900">
+            <BlurText key={`assistant-title-${t("assistant.title")}`} text={t("assistant.title")} as="span" className="font-inherit" delay={70} stepDuration={0.3} />
+          </h1>
+          <BlurText
+            key={`assistant-subtitle-${t("assistant.subtitle")}`}
+            text={t("assistant.subtitle")}
+            className="text-ink-700"
+            delay={45}
+            stepDuration={0.3}
+          />
         </div>
       </header>
 

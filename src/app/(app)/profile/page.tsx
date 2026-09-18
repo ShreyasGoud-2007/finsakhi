@@ -9,6 +9,7 @@ import { goalProgress } from "@/lib/calculations";
 import { rupees } from "@/lib/format";
 import { fillTemplate, getDemoDisplayLabel, LANGUAGES } from "@/lib/i18n";
 import { useStore } from "@/lib/store";
+import BlurText from "@/components/ui/BlurText";
 
 export default function ProfilePage() {
   const { user, goals, updateUser, prefs, t } = useStore();
@@ -77,7 +78,8 @@ export default function ProfilePage() {
 
       <section className="card p-5 sm:p-6 mt-6" aria-labelledby="profile-goals">
         <h2 id="profile-goals" className="flex items-center gap-2 font-display text-2xl font-bold">
-          <Target size={22} className="text-brand-600" aria-hidden="true" /> {t("profile.whatSavingFor")}
+          <Target size={22} className="text-brand-600" aria-hidden="true" />
+          <BlurText key={`profile-goals-${t("profile.whatSavingFor")}`} text={t("profile.whatSavingFor")} as="span" className="font-inherit" delay={70} stepDuration={0.3} />
         </h2>
         {goals.length === 0 ? (
           <p className="text-ink-700 mt-2">{t("profile.notSetGoal")}</p>

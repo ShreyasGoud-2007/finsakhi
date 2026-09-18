@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Bot, MinusCircle, PlusCircle, Target } from "lucide-react";
 import { useStore } from "@/lib/store";
+import BlurText from "@/components/ui/BlurText";
 
 export function QuickActions({
   onAddIncome, onAddExpense, onCreateGoal,
@@ -16,7 +17,9 @@ export function QuickActions({
   return (
     <section aria-label={t("dashboard.quickActions")} className="space-y-3">
       <div className="flex items-center justify-between gap-3">
-        <h2 className="font-display text-2xl font-bold text-ink-900">{t("dashboard.quickActions")}</h2>
+        <h2 className="font-display text-2xl font-bold text-ink-900">
+          <BlurText key={`quick-actions-${t("dashboard.quickActions")}`} text={t("dashboard.quickActions")} as="span" className="font-inherit" delay={70} stepDuration={0.3} />
+        </h2>
       </div>
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <button onClick={onAddIncome}

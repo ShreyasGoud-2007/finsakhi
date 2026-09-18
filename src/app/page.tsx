@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import { HeroPreview } from "@/components/landing/HeroPreview";
+import BlurText from "@/components/ui/BlurText";
 import { useStore } from "@/lib/store";
 
 export default function LandingPage() {
@@ -43,12 +44,23 @@ export default function LandingPage() {
             </p>
 
             <h1 className="mt-5 font-display text-[2.7rem] leading-[1.05] sm:text-6xl font-extrabold tracking-tight">
-              {t("landing.heroTitle")}
+              <BlurText
+                key={`landing-hero-${t("landing.heroTitle")}`}
+                text={t("landing.heroTitle")}
+                as="span"
+                className="font-inherit"
+                delay={90}
+                stepDuration={0.4}
+              />
             </h1>
 
-            <p className="mt-5 max-w-readable text-lg text-ink-700 leading-relaxed">
-              {t("landing.heroDescription")}
-            </p>
+            <BlurText
+              key={`landing-description-${t("landing.heroDescription")}`}
+              text={t("landing.heroDescription")}
+              className="mt-5 max-w-readable text-lg text-ink-700 leading-relaxed"
+              delay={35}
+              stepDuration={0.3}
+            />
 
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/signup" className="btn-primary text-lg px-7">
@@ -71,7 +83,14 @@ export default function LandingPage() {
         <section className="bg-white border-y border-ink-300/20 py-16" aria-labelledby="features-heading">
           <div className="mx-auto max-w-6xl px-5">
             <h2 id="features-heading" className="section-title max-w-readable">
-              {t("landing.featuresHeading")}
+              <BlurText
+                key={`landing-features-${t("landing.featuresHeading")}`}
+                text={t("landing.featuresHeading")}
+                as="span"
+                className="font-inherit"
+                delay={70}
+                stepDuration={0.3}
+              />
             </h2>
             <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {features.map((f) => (
@@ -90,7 +109,16 @@ export default function LandingPage() {
         {/* How it works - genuinely a sequence, so it is numbered */}
         <section className="py-16" aria-labelledby="how-heading">
           <div className="mx-auto max-w-6xl px-5">
-            <h2 id="how-heading" className="section-title">{t("landing.howItWorks")}</h2>
+            <h2 id="how-heading" className="section-title">
+              <BlurText
+                key={`landing-how-${t("landing.howItWorks")}`}
+                text={t("landing.howItWorks")}
+                as="span"
+                className="font-inherit"
+                delay={70}
+                stepDuration={0.3}
+              />
+            </h2>
             <ol className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
               {steps.map((s, i) => (
                 <li key={s.title} className="relative rounded-2xl bg-white border border-ink-300/25 p-5">
@@ -110,7 +138,14 @@ export default function LandingPage() {
         <section className="mx-auto max-w-6xl px-5 pb-16">
           <div className="rounded-3xl bg-brand-700 px-6 py-12 sm:px-12 text-center text-white">
             <h2 className="font-display text-3xl sm:text-4xl font-extrabold">
-              {t("landing.ctaTitle")}
+              <BlurText
+                key={`landing-cta-${t("landing.ctaTitle")}`}
+                text={t("landing.ctaTitle")}
+                as="span"
+                className="font-inherit justify-center"
+                delay={70}
+                stepDuration={0.3}
+              />
             </h2>
             <p className="mt-3 text-brand-100 text-lg max-w-readable mx-auto">
               {t("landing.ctaBody")}

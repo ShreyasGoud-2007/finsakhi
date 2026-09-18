@@ -13,6 +13,7 @@ import { TransactionModal } from "@/components/transactions/TransactionModal";
 import { LanguageSelector } from "@/components/ui/LanguageSelector";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { EmptyState, LoadingState } from "@/components/ui/States";
+import BlurText from "@/components/ui/BlurText";
 import {
   getCategoryTotals,
   getSummary,
@@ -64,11 +65,23 @@ export default function DashboardPage() {
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-brand-700">{t("dashboard.monthlyOverview")}</p>
             <h1 className="mt-2 font-display text-3xl font-extrabold tracking-tight text-ink-900 sm:text-4xl">
-              {greeting(prefs.language)}, {user.name}
+              <BlurText
+                key={`dashboard-greeting-${prefs.language}-${greeting(prefs.language)}`}
+                text={greeting(prefs.language)}
+                as="span"
+                className="font-inherit"
+                delay={70}
+                stepDuration={0.3}
+              />
+              , {user.name}
             </h1>
-            <p className="mt-2 max-w-readable text-lg text-ink-700">
-              {t("label.subtitle")}
-            </p>
+            <BlurText
+              key={`dashboard-subtitle-${t("label.subtitle")}`}
+              text={t("label.subtitle")}
+              className="mt-2 max-w-readable text-lg text-ink-700"
+              delay={45}
+              stepDuration={0.3}
+            />
           </div>
 
           <div className="hidden lg:block">
@@ -99,7 +112,7 @@ export default function DashboardPage() {
               id="recent-heading"
               className="font-display text-2xl font-bold"
             >
-              {t("dashboard.recentActivity")}
+              <BlurText key={`dashboard-recent-${t("dashboard.recentActivity")}`} text={t("dashboard.recentActivity")} as="span" className="font-inherit" delay={70} stepDuration={0.3} />
             </h2>
 
             <Link
@@ -148,7 +161,7 @@ export default function DashboardPage() {
               id="goal-heading"
               className="font-display text-2xl font-bold"
             >
-              {t("dashboard.yourSavingsGoal")}
+              <BlurText key={`dashboard-goal-${t("dashboard.yourSavingsGoal")}`} text={t("dashboard.yourSavingsGoal")} as="span" className="font-inherit" delay={70} stepDuration={0.3} />
             </h2>
 
             <Link

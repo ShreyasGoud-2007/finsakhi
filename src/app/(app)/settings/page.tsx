@@ -6,6 +6,7 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { LanguageSelector } from "@/components/ui/LanguageSelector";
 import { logout } from "@/lib/services/authService";
 import { useStore } from "@/lib/store";
+import BlurText from "@/components/ui/BlurText";
 
 function Toggle({
   id, label, description, checked, onChange,
@@ -40,7 +41,8 @@ function Section({
   return (
     <section className="card p-5 sm:p-6">
       <h2 className="flex items-center gap-2 font-display text-xl font-bold">
-        <Icon size={21} className="text-brand-600" aria-hidden="true" /> {title}
+        <Icon size={21} className="text-brand-600" aria-hidden="true" />
+        <BlurText key={`settings-section-${title}`} text={title} as="span" className="font-inherit" delay={70} stepDuration={0.3} />
       </h2>
       <div className="mt-3">{children}</div>
     </section>

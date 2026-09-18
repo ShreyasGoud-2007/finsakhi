@@ -7,6 +7,7 @@ import { getCategoryLabel, getDemoDisplayLabel } from "@/lib/i18n";
 import { rupees } from "@/lib/format";
 import { useStore } from "@/lib/store";
 import type { ExpenseCategoryTotal } from "@/lib/types";
+import BlurText from "@/components/ui/BlurText";
 
 export function ExpenseChart({ data }: { data: ExpenseCategoryTotal[] }) {
   const { t, prefs } = useStore();
@@ -15,7 +16,9 @@ export function ExpenseChart({ data }: { data: ExpenseCategoryTotal[] }) {
   if (total === 0) {
     return (
       <section className="card p-6">
-        <h2 className="section-title mb-2">{t("label.spending")}</h2>
+        <h2 className="section-title mb-2">
+          <BlurText key={`spending-empty-${t("label.spending")}`} text={t("label.spending")} as="span" className="font-inherit" delay={70} stepDuration={0.3} />
+        </h2>
         <p className="text-ink-700">{t("dashboard.spendingEmpty")}</p>
       </section>
     );
@@ -23,7 +26,9 @@ export function ExpenseChart({ data }: { data: ExpenseCategoryTotal[] }) {
 
   return (
     <section className="card p-5 sm:p-6" aria-labelledby="spending-heading">
-      <h2 id="spending-heading" className="section-title">{t("label.spending")}</h2>
+      <h2 id="spending-heading" className="section-title">
+        <BlurText key={`spending-heading-${t("label.spending")}`} text={t("label.spending")} as="span" className="font-inherit" delay={70} stepDuration={0.3} />
+      </h2>
       <p className="text-ink-700 mt-1">{t("dashboard.spendingDescription")}</p>
 
       <div className="mt-5 grid gap-6 lg:grid-cols-[minmax(0,260px)_1fr] items-center">
