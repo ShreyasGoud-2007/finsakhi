@@ -2,24 +2,25 @@
 
 import { useEffect, useState } from "react";
 import { Modal } from "@/components/ui/Modal";
+import { getDemoDisplayLabel } from "@/lib/i18n";
 import { useStore } from "@/lib/store";
 import type { SavingsGoal } from "@/lib/types";
 
 export function AddToGoalModal({
   goal, onClose,
 }: { goal: SavingsGoal | null; onClose: () => void }) {
-  const { addToGoal } = useStore();
+  const { addToGoal, t, prefs } = useStore();
   const [amount, setAmount] = useState("");
 
   useEffect(() => { setAmount(""); }, [goal]);
   if (!goal) return null;
 
   return (
-    <Modal open onClose={onClose} title={`Add to ${goal.name}`}
-           description="Record money you have put aside for this goal.">
+        <Modal open onClose={onClose} title={t("goal.addTitle").replace("{name}", getDemoDisplayLabel(goal.name, prefs.language))}
+          description={t("goal.addDescription")}>
       <div className="space-y-5">
         <div>
-          <label htmlFor="goal-add" className="label">Amount</label>
+          <label htmlFor="goal-add" className="label">{t("label.amount")}</label>
           <div className="relative">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl font-bold text-ink-500"
                   aria-hidden="true">₹</span>
@@ -29,7 +30,7 @@ export function AddToGoalModal({
           </div>
         </div>
         <div className="flex flex-col-reverse sm:flex-row gap-3 sm:justify-end">
-          <button onClick={onClose} className="btn-secondary">Cancel</button>
+          <button onClick={onClose} className="btn-secondary">{t("action.cancel")}</button>
           <button
             onClick={async () => {
               const v = Number(amount);
@@ -38,7 +39,7 @@ export function AddToGoalModal({
             }}
             className="btn-primary"
           >
-            Add to goal
+            {t("goal.addToGoal")}
           </button>
         </div>
       </div>

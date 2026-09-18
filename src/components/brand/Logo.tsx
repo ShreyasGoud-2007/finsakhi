@@ -1,4 +1,5 @@
 import { IndianRupee, Sparkles } from "lucide-react";
+import { useStore } from "@/lib/store";
 
 /** Icon-only mark: a rupee inside a shield-ish rounded wallet, with an AI spark. */
 export function LogoMark({ size = 40 }: { size?: number }) {
@@ -22,6 +23,7 @@ export function LogoMark({ size = 40 }: { size?: number }) {
 export function Logo({
   size = 40, showTagline = false,
 }: { size?: number; showTagline?: boolean }) {
+  const { t } = useStore();
   return (
     <span className="inline-flex items-center gap-2.5">
       <LogoMark size={size} />
@@ -31,7 +33,7 @@ export function Logo({
           Fin<span className="text-brand-600">Sakhi</span>
         </span>
         {showTagline && (
-          <span className="block text-xs text-ink-500">Your money, made simple</span>
+          <span className="block text-xs text-ink-500">{t("common.brandTagline")}</span>
         )}
       </span>
     </span>

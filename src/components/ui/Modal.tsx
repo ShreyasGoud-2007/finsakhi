@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
+import { useStore } from "@/lib/store";
 
 /**
  * Sheet on mobile, centred dialog on desktop.
@@ -17,6 +18,7 @@ export function Modal({
   children: React.ReactNode;
 }) {
   const panelRef = useRef<HTMLDivElement>(null);
+  const { t } = useStore();
 
   useEffect(() => {
     if (!open) return;
@@ -53,7 +55,7 @@ export function Modal({
             <h2 className="font-display text-2xl font-bold">{title}</h2>
             {description && <p className="text-ink-700 mt-1">{description}</p>}
           </div>
-          <button onClick={onClose} aria-label="Close" className="btn-ghost !px-2 !min-h-0 py-2">
+          <button onClick={onClose} aria-label={t("action.close")} className="btn-ghost !px-2 !min-h-0 py-2">
             <X size={22} />
           </button>
         </div>

@@ -2,6 +2,7 @@
 
 import { Sparkles } from "lucide-react";
 import type { ChatMessage as Msg } from "@/lib/types";
+import { useStore } from "@/lib/store";
 
 /**
  * Renders the assistant's light markup: "## heading", "- bullet",
@@ -66,13 +67,14 @@ function Inline({ text }: { text: string }) {
 
 export function ChatMessage({ message }: { message: Msg }) {
   const isUser = message.role === "user";
+  const { t } = useStore();
 
   if (isUser) {
     return (
       <li className="flex justify-end">
         <div className="max-w-[85%] sm:max-w-[75%] rounded-2xl rounded-br-md bg-brand-600
                         px-4 py-3 text-white text-[1.02rem] leading-relaxed">
-          <span className="sr-only">You said: </span>
+          <span className="sr-only">{t("assistant.youSaid")}</span>
           {message.content}
         </div>
       </li>
@@ -90,7 +92,7 @@ export function ChatMessage({ message }: { message: Msg }) {
                        ${message.error
                          ? "bg-expense-soft border-2 border-expense/30"
                          : "bg-white border border-ink-300/25"}`}>
-        <span className="sr-only">FinSakhi said: </span>
+        <span className="sr-only">{t("assistant.sakhiSaid")}</span>
         <RichText text={message.content} />
       </div>
     </li>

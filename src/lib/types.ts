@@ -59,16 +59,19 @@ export interface ChatMessage {
 
 export type LessonCategory = "basics" | "saving" | "borrowing" | "investing" | "protection";
 
+export type LocalizedText = string | { en: string; te?: string; hi?: string };
+export type LocalizedList = string[] | { en: string[]; te?: string[]; hi?: string[] };
+
 export interface FinancialLesson {
   id: string;
-  title: string;
-  summary: string;
+  title: LocalizedText;
+  summary: LocalizedText;
   category: LessonCategory;
   icon: string;
-  explanation: string;
-  example: string;
-  whyItMatters: string;
-  remember: string[];
+  explanation: LocalizedText;
+  example: LocalizedText;
+  whyItMatters: LocalizedText;
+  remember: LocalizedList;
 }
 
 export interface FinancialContext {

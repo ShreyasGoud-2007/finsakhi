@@ -3,6 +3,7 @@
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { CategoryIcon } from "@/components/ui/CategoryIcon";
 import { getCategory } from "@/lib/categories";
+import { getCategoryLabel, getDemoDisplayLabel } from "@/lib/i18n";
 import { rupees } from "@/lib/format";
 import { useStore } from "@/lib/store";
 import type { ExpenseCategoryTotal } from "@/lib/types";
@@ -15,7 +16,7 @@ export function ExpenseChart({ data }: { data: ExpenseCategoryTotal[] }) {
     return (
       <section className="card p-6">
         <h2 className="section-title mb-2">{t("label.spending")}</h2>
-        <p className="text-ink-700">Add an expense and your spending picture appears here.</p>
+        <p className="text-ink-700">{t("dashboard.spendingEmpty")}</p>
       </section>
     );
   }
@@ -23,7 +24,7 @@ export function ExpenseChart({ data }: { data: ExpenseCategoryTotal[] }) {
   return (
     <section className="card p-5 sm:p-6" aria-labelledby="spending-heading">
       <h2 id="spending-heading" className="section-title">{t("label.spending")}</h2>
-      <p className="text-ink-700 mt-1">Every ₹100 you spent, split by what you spent it on.</p>
+      <p className="text-ink-700 mt-1">{t("dashboard.spendingDescription")}</p>
 
       <div className="mt-5 grid gap-6 lg:grid-cols-[minmax(0,260px)_1fr] items-center">
         {!prefs.simpleView && (
@@ -38,7 +39,7 @@ export function ExpenseChart({ data }: { data: ExpenseCategoryTotal[] }) {
                   {data.map((c) => <Cell key={c.id} fill={c.color} />)}
                 </Pie>
                 <Tooltip
-                  formatter={(value: number, name: string) => [rupees(value), name]}
+                  formatter={(value: number, name: string) => [rupees(value), getDemoDisplayLabel(name, prefs.language)]}
                   contentStyle={{
                     borderRadius: 12, border: "1px solid #E3E8E6",
                     fontSize: 14, fontWeight: 600,
@@ -47,7 +48,7 @@ export function ExpenseChart({ data }: { data: ExpenseCategoryTotal[] }) {
               </PieChart>
             </ResponsiveContainer>
             <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-sm text-ink-500">Spent</span>
+              <span className="text-sm text-ink-500">{t("common.spentLabel")}</span>
               <span className="font-display text-2xl font-extrabold tabular-nums">
                 {rupees(total)}
               </span>
@@ -68,7 +69,7 @@ export function ExpenseChart({ data }: { data: ExpenseCategoryTotal[] }) {
                   <CategoryIcon name={meta.icon} size={20} />
                 </span>
                 <span className="flex-1 min-w-0">
-                  <span className="block font-semibold truncate">{c.name}</span>
+                  <span className="block font-semibold truncate">{getCategoryLabel(c.id, prefs.language)}</span>
                   <span className="block h-2 rounded-full bg-cream-200 mt-1.5 overflow-hidden">
                     <span className="block h-full rounded-full"
                           style={{ width: `${c.percentage}%`, backgroundColor: c.color }} />

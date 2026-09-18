@@ -1,4 +1,5 @@
 import { AlertCircle, Loader2, type LucideIcon } from "lucide-react";
+import { useStore } from "@/lib/store";
 
 export function EmptyState({
   icon: Icon, title, message, action,
@@ -15,24 +16,26 @@ export function EmptyState({
   );
 }
 
-export function LoadingState({ message = "Loading your financial overview..." }: { message?: string }) {
+export function LoadingState({ message }: { message?: string }) {
+  const { t } = useStore();
   return (
     <div className="flex items-center gap-3 text-ink-700 p-8 justify-center" role="status">
       <Loader2 size={22} className="animate-spin text-brand-600" aria-hidden="true" />
-      <span className="font-medium">{message}</span>
+      <span className="font-medium">{message ?? t("label.loading")}</span>
     </div>
   );
 }
 
 export function ErrorState({
-  message = "Something went wrong. Please try again.", onRetry,
+  message, onRetry,
 }: { message?: string; onRetry?: () => void }) {
+  const { t } = useStore();
   return (
     <div className="rounded-2xl border-2 border-expense/30 bg-expense-soft p-5 flex flex-wrap items-center gap-4"
          role="alert">
       <AlertCircle size={22} className="text-expense shrink-0" aria-hidden="true" />
-      <p className="font-medium text-ink-900 flex-1 min-w-[12rem]">{message}</p>
-      {onRetry && <button onClick={onRetry} className="btn-secondary">Try again</button>}
+      <p className="font-medium text-ink-900 flex-1 min-w-[12rem]">{message ?? t("state.defaultError")}</p>
+      {onRetry && <button onClick={onRetry} className="btn-secondary">{t("common.tryAgain")}</button>}
     </div>
   );
 }

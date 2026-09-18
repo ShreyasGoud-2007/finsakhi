@@ -32,13 +32,13 @@ export default function TransactionsPage() {
 
   const summary = useMemo(() => getSummary(filtered), [filtered]);
 
-  if (loading) return <LoadingState message="Loading your transactions..." />;
+  if (loading) return <LoadingState message={t("label.loadingTransactions")} />;
 
   return (
     <div>
       <PageHeader
-        title="My transactions"
-        subtitle="Everything that came in and went out."
+        title={t("transactions.pageTitle")}
+        subtitle={t("transactions.subtitle")}
         actions={
           <>
             <button onClick={() => setModal("income")} className="btn-secondary">
@@ -51,14 +51,14 @@ export default function TransactionsPage() {
         }
       />
 
-      <section className="card p-4 sm:p-5 mb-6 space-y-4" aria-label="Filters">
+      <section className="card p-4 sm:p-5 mb-6 space-y-4" aria-label={t("transactions.filters")}>
         <div>
-          <span className="label">Show</span>
+          <span className="label">{t("common.show")}</span>
           <div className="flex flex-wrap gap-2">
             {([
-              { id: "all", label: "Everything" },
-              { id: "income", label: "Money received" },
-              { id: "expense", label: "Money spent" },
+              { id: "all", label: t("transactions.filterEverything") },
+              { id: "income", label: t("transactions.filterIncome") },
+              { id: "expense", label: t("transactions.filterExpense") },
             ] as const).map((f) => (
               <button key={f.id} onClick={() => setTypeFilter(f.id)}
                       aria-pressed={typeFilter === f.id}
@@ -71,25 +71,25 @@ export default function TransactionsPage() {
 
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="cat-filter" className="label">Category</label>
+            <label htmlFor="cat-filter" className="label">{t("label.category")}</label>
             <select id="cat-filter" value={category}
                     onChange={(e) => setCategory(e.target.value as CategoryId | "all")}
                     className="field">
-              <option value="all">All categories</option>
-              {CATEGORIES.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
-              <option value="income">Income</option>
+              <option value="all">{t("transactions.allCategories")}</option>
+              {CATEGORIES.map((c) => <option key={c.id} value={c.id}>{t(`category.${c.id}` as any)}</option>)}
+              <option value="income">{t("category.income")}</option>
             </select>
           </div>
           <div>
-            <label htmlFor="month-filter" className="label">Month</label>
+            <label htmlFor="month-filter" className="label">{t("label.month")}</label>
             <input id="month-filter" type="month" value={month}
                    onChange={(e) => setMonth(e.target.value)} className="field" />
           </div>
         </div>
 
         <p className="text-ink-700 tabular-nums">
-          Showing {filtered.length} {filtered.length === 1 ? "entry" : "entries"} ·
-          in {rupees(summary.income)} · out {rupees(summary.expenses)}
+          {t("transactions.showing")} {filtered.length} {filtered.length === 1 ? t("label.entry") : t("label.entries")} ·
+          {` ${t("transactions.in")} `}{rupees(summary.income)} · {` ${t("transactions.out")} `}{rupees(summary.expenses)}
         </p>
       </section>
 
@@ -98,19 +98,19 @@ export default function TransactionsPage() {
           <EmptyState
             icon={Receipt}
             title={transactions.length === 0
-              ? "You haven't added any transactions yet."
-              : "Nothing matches these filters."}
+              ? t("transactions.noTransactions")
+              : t("transactions.noneMatches")}
             message={transactions.length === 0
-              ? "Start by adding one thing you spent money on today."
-              : "Try choosing a different category or month."}
+              ? t("transactions.startByAdding")
+              : t("transactions.noneMatches")}
             action={
               transactions.length === 0 ? (
                 <button onClick={() => setModal("expense")} className="btn-primary">
-                  Add your first expense
+                  {t("action.addFirstExpense")}
                 </button>
               ) : (
                 <button onClick={() => { setTypeFilter("all"); setCategory("all"); setMonth(""); }}
-                        className="btn-secondary">Clear filters</button>
+                        className="btn-secondary">{t("action.clearFilters")}</button>
               )
             }
           />

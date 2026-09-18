@@ -14,20 +14,20 @@ export function Sidebar() {
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
 
   const linkClass = (active: boolean) =>
-    `flex items-center gap-3 rounded-xl px-4 py-3 font-semibold transition-colors ${
+    `flex items-center gap-3 rounded-2xl px-4 py-3 font-semibold transition-colors ${
       active
-        ? "bg-brand-600 text-white"
+        ? "bg-brand-600 text-white shadow-lift"
         : "text-ink-700 hover:bg-brand-50 hover:text-brand-700"
     }`;
 
   return (
     <aside className="hidden lg:flex fixed inset-y-0 left-0 w-[272px] flex-col
                       border-r border-ink-300/25 bg-white px-4 py-6">
-      <Link href="/dashboard" className="px-2 mb-8" aria-label="FinSakhi home">
+      <Link href="/dashboard" className="px-2 mb-8" aria-label={t("common.home")}>
         <Logo size={40} showTagline />
       </Link>
 
-      <nav aria-label="Main" className="flex-1">
+      <nav aria-label={t("common.mainNavigation")} className="flex-1">
         <ul className="space-y-1.5">
           {NAV_ITEMS.map((item) => {
             const active = isActive(item.href);
