@@ -51,3 +51,43 @@ export function monthsRemaining(goal: SavingsGoal): number | null {
 export function sortByDateDesc(transactions: Transaction[]): Transaction[] {
   return [...transactions].sort((a, b) => b.date.localeCompare(a.date));
 }
+export function getRemainingAmount(goal: SavingsGoal): number {
+  return Math.max(0, goal.targetAmount - goal.savedAmount);
+}
+
+export function getTopExpenseCategory(
+  transactions: Transaction[]
+): ExpenseCategoryTotal | null {
+  const categories = getCategoryTotals(transactions);
+
+  return categories.length > 0 ? categories[0] : null;
+}
+
+export function getAverageExpense(
+  transactions: Transaction[]
+): number {
+  const expenses = transactions.filter((t) => t.type === "expense");
+
+  if (expenses.length === 0) return 0;
+
+  const total = expenses.reduce((sum, t) => sum + t.amount, 0);
+
+  return total / expenses.length;
+}
+
+export function getExpensePercentage(
+  transactions: Transaction[],
+  category: string
+): number {
+  const expenses = transactions.filter((t) => t.type === "expense");
+
+  const total = expenses.reduce((sum, t) => sum + t.amount, 0);
+
+  if (total === 0) return 0;
+
+  const categoryAmount = expenses
+    .filter((t) => t.category === category)
+    .reduce((sum, t) => sum + t.amount, 0);
+
+  return (categoryAmount / total) * 100;
+}

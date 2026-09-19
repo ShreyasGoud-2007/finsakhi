@@ -6,13 +6,13 @@ import { LANGUAGES } from "@/lib/i18n";
 import type { Language } from "@/lib/types";
 
 export function LanguageSelector({ compact = false }: { compact?: boolean }) {
-  const { prefs, setLanguage } = useStore();
+  const { prefs, setLanguage, t } = useStore();
 
   if (compact) {
     return (
       <div className="inline-flex items-center gap-2">
         <Languages size={20} className="text-ink-500" aria-hidden="true" />
-        <label htmlFor="lang-select" className="sr-only">Choose language</label>
+        <label htmlFor="lang-select" className="sr-only">{t("label.chooseLanguage")}</label>
         <select
           id="lang-select"
           value={prefs.language}
@@ -28,7 +28,7 @@ export function LanguageSelector({ compact = false }: { compact?: boolean }) {
   }
 
   return (
-    <div role="group" aria-label="Choose language" className="flex flex-wrap gap-2">
+    <div role="group" aria-label={t("label.chooseLanguage")} className="flex flex-wrap gap-2">
       {LANGUAGES.map((l) => (
         <button
           key={l.code}

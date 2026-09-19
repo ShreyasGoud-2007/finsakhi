@@ -8,29 +8,12 @@ import { SuggestedQuestion } from "./SuggestedQuestion";
 import { sendMessage } from "@/lib/services/aiService";
 import { useStore } from "@/lib/store";
 import type { ChatMessage as Msg } from "@/lib/types";
-
-const SUGGESTIONS = [
-  "I earn ₹15,000. How can I save?",
-  "What is an emergency fund?",
-  "How can I reduce my expenses?",
-  "What is a fixed deposit?",
-  "What is a mutual fund?",
-  "What is insurance?",
-  "I want to save ₹20,000. Help me plan.",
-];
-
-const WELCOME: Msg = {
-  id: "welcome",
-  role: "assistant",
-  content:
-    "Hello! I'm FinSakhi AI.\nI can help you understand your income and expenses, plan your savings, and explain money topics in simple words.\nWhat would you like to know?",
-  createdAt: new Date().toISOString(),
-};
+import BlurText from "@/components/ui/BlurText";
 
 export function AssistantChat() {
   const params = useSearchParams();
-  const { financialContext, prefs, user } = useStore();
-  const [messages, setMessages] = useState<Msg[]>([WELCOME]);
+  const { financialContext, prefs, user, t } = useStore();
+  const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [thinking, setThinking] = useState(false);
   const [listening, setListening] = useState(false);
@@ -60,15 +43,26 @@ export function AssistantChat() {
       } catch {
         setMessages((m) => [...m, {
           id: crypto.randomUUID(), role: "assistant", error: true,
-          content: "Something went wrong. Please try asking again.",
+          content: t("assistant.defaultError"),
           createdAt: new Date().toISOString(),
         }]);
       } finally {
         setThinking(false);
       }
     },
-    [financialContext, prefs.language, thinking],
+    [financialContext, prefs.language, thinking, t],
   );
+
+  useEffect(() => {
+    setMessages((current) => {
+      const welcome: Msg = {
+        id: "welcome", role: "assistant", content: t("assistant.welcome"),
+        createdAt: new Date().toISOString(),
+      };
+      if (!current.length || (current.length === 1 && current[0].id === "welcome")) return [welcome];
+      return current;
+    });
+  }, [t]);
 
   // A lesson page can deep-link a question in.
   const prefilled = params.get("q");
@@ -83,7 +77,7 @@ export function AssistantChat() {
   function toggleVoice() {
     const SR = (window as any).SpeechRecognition ?? (window as any).webkitSpeechRecognition;
     if (!SR) {
-      setVoiceNote("Voice input isn't available in this browser. You can still type your question.");
+      setVoiceNote(t("assistant.voiceUnavailable"));
       return;
     }
     if (listening) {
@@ -96,7 +90,7 @@ export function AssistantChat() {
     recognition.interimResults = false;
     recognition.onresult = (e: any) => setInput(e.results[0][0].transcript);
     recognition.onerror = () => {
-      setVoiceNote("Could not hear anything. Please try again or type your question.");
+      setVoiceNote(t("assistant.voiceFailed"));
       setListening(false);
     };
     recognition.onend = () => setListening(false);
@@ -108,25 +102,33 @@ export function AssistantChat() {
 
   return (
     <div className="flex flex-col min-h-[calc(100vh-13rem)] lg:min-h-[calc(100vh-8rem)]">
-      <header className="flex items-start gap-3">
-        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-600 text-white">
+      <header className="flex items-start gap-3 rounded-3xl border border-brand-100 bg-white p-4 shadow-card sm:p-5">
+        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-600 text-white shadow-lift">
           <Sparkles size={24} aria-hidden="true" />
         </span>
         <div>
-          <h1 className="font-display text-3xl font-extrabold tracking-tight">FinSakhi AI</h1>
-          <p className="text-ink-700">Your simple financial learning companion.</p>
+          <p className="text-xs font-bold uppercase tracking-[0.12em] text-brand-700">{t("assistant.aiHelper")}</p>
+          <h1 className="font-display text-3xl font-extrabold tracking-tight text-ink-900">
+            <BlurText key={`assistant-title-${t("assistant.title")}`} text={t("assistant.title")} as="span" className="font-inherit" delay={70} stepDuration={0.3} />
+          </h1>
+          <BlurText
+            key={`assistant-subtitle-${t("assistant.subtitle")}`}
+            text={t("assistant.subtitle")}
+            className="text-ink-700"
+            delay={45}
+            stepDuration={0.3}
+          />
         </div>
       </header>
 
-      <p className="mt-4 flex items-start gap-2 rounded-xl bg-brand-50 border border-brand-200 px-4 py-3 text-sm">
-        <Info size={17} className="shrink-0 mt-0.5 text-brand-700" aria-hidden="true" />
+      <p className="mt-4 flex items-start gap-2 rounded-2xl border border-brand-200 bg-brand-50 px-4 py-3 text-sm leading-relaxed text-ink-700">
+        <Info size={17} className="mt-0.5 shrink-0 text-brand-700" aria-hidden="true" />
         <span>
-          FinSakhi is using your financial overview to personalise this conversation.
-          Your details are not shown in the chat.
+          {t("assistant.helper")}
         </span>
       </p>
 
-      <ul className="flex-1 space-y-4 py-6" aria-live="polite" aria-label="Conversation">
+      <ul className="flex-1 space-y-4 py-6" aria-live="polite" aria-label={t("assistant.conversation")}>
         {messages.map((m) => <ChatMessage key={m.id} message={m} />)}
         {thinking && (
           <li className="flex gap-3 items-center">
@@ -136,7 +138,7 @@ export function AssistantChat() {
             </span>
             <span className="rounded-2xl rounded-tl-md bg-white border border-ink-300/25 px-4 py-3
                              font-medium text-ink-700">
-              FinSakhi is thinking
+              {t("assistant.thinking")}
               <span className="inline-flex gap-1 ml-1.5" aria-hidden="true">
                 <span className="h-1.5 w-1.5 rounded-full bg-brand-400 animate-bounce" />
                 <span className="h-1.5 w-1.5 rounded-full bg-brand-400 animate-bounce [animation-delay:150ms]" />
@@ -149,12 +151,13 @@ export function AssistantChat() {
       </ul>
 
       {messages.length <= 1 && (
-        <section aria-label="Suggested questions" className="mb-4">
-          <p className="label">Try asking</p>
+        <section aria-label={t("assistant.suggestedQuestions")} className="mb-4">
+          <p className="mb-2 text-sm font-semibold uppercase tracking-[0.12em] text-brand-700">{t("assistant.tryAsking")}</p>
           <div className="grid gap-2 sm:grid-cols-2">
-            {SUGGESTIONS.map((s) => (
-              <SuggestedQuestion key={s} text={s} onSelect={ask} />
-            ))}
+            {[1, 2, 3, 4, 5, 6, 7].map((id) => {
+              const text = t(`assistant.suggestion${id}` as any);
+              return <SuggestedQuestion key={text} text={text} onSelect={ask} />;
+            })}
           </div>
         </section>
       )}
@@ -168,32 +171,31 @@ export function AssistantChat() {
       <div className="sticky bottom-20 lg:bottom-4 bg-cream pt-2">
         <form
           onSubmit={(e) => { e.preventDefault(); ask(input); }}
-          className="flex items-end gap-2"
+          className="flex items-end gap-2 rounded-2xl border border-brand-100 bg-white p-2 shadow-card"
         >
-          <label htmlFor="chat-input" className="sr-only">Ask FinSakhi anything</label>
+          <label htmlFor="chat-input" className="sr-only">{t("assistant.askAnything")}</label>
           <input
             id="chat-input" value={input} onChange={(e) => setInput(e.target.value)}
-            placeholder={`Ask FinSakhi anything, ${user.name}...`}
-            className="field flex-1 !py-3.5"
+            placeholder={t("assistant.placeholder").replace("{name}", user.name)}
+            className="field flex-1 !py-3.5 border-0 bg-transparent focus:border-0"
             autoComplete="off"
           />
           <button type="button" onClick={toggleVoice}
                   aria-pressed={listening}
-                  aria-label={listening ? "Stop voice input" : "Speak your question"}
+                  aria-label={listening ? t("assistant.stopVoice") : t("assistant.voiceToggle")}
                   className={`btn !px-3.5 ${listening
                     ? "bg-expense text-white" : "bg-white border-2 border-ink-300/40 text-ink-700"}`}>
             {listening ? <MicOff size={21} /> : <Mic size={21} />}
           </button>
           <button type="submit" disabled={!input.trim() || thinking}
-                  aria-label="Send question" className="btn-primary !px-4">
+                  aria-label={t("assistant.sendQuestion")} className="btn-primary !px-4">
             <Send size={21} aria-hidden="true" />
           </button>
         </form>
 
-        <p className="mt-3 flex items-start gap-2 text-xs text-ink-500 leading-relaxed">
-          <ShieldCheck size={15} className="shrink-0 mt-0.5" aria-hidden="true" />
-          FinSakhi provides educational and budgeting guidance. It does not provide guaranteed
-          financial returns or replace professional financial advice.
+        <p className="mt-3 flex items-start gap-2 text-xs leading-relaxed text-ink-500">
+          <ShieldCheck size={15} className="mt-0.5 shrink-0 text-brand-600" aria-hidden="true" />
+          {t("assistant.privacyNote")}
         </p>
       </div>
     </div>

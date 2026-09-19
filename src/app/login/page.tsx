@@ -10,7 +10,7 @@ import { useStore } from "@/lib/store";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { updateUser } = useStore();
+  const { updateUser, t } = useStore();
   const [email, setEmail] = useState("lakshmi@example.com");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -19,13 +19,13 @@ export default function LoginPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
-    if (!email.trim()) return setError("Enter your email address.");
+    if (!email.trim()) return setError(t("auth.emailRequired"));
     setBusy(true);
     try {
       updateUser(await login(email, password));
       router.push("/dashboard");
     } catch {
-      setError("Could not log in. Check your details and try again.");
+      setError(t("auth.loginError"));
     } finally {
       setBusy(false);
     }
@@ -37,34 +37,34 @@ export default function LoginPage() {
       updateUser(await loginWithGoogle());
       router.push("/dashboard");
     } catch {
-      setError("Google sign-in is not connected yet.");
+      setError(t("auth.googleUnavailable"));
     }
   }
 
   return (
     <AuthShell
-      title="Welcome back"
-      subtitle="Log in to see your money."
+      title={t("auth.loginTitle")}
+      subtitle={t("auth.loginSubtitle")}
       footer={
         <p className="text-ink-700">
-          Don&apos;t have an account?{" "}
+          {t("auth.noAccount")} {" "}
           <Link href="/signup" className="font-semibold text-brand-700 underline underline-offset-4">
-            Create account
+            {t("auth.createAccount")}
           </Link>
         </p>
       }
     >
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
         <div>
-          <label htmlFor="email" className="label">Email</label>
+          <label htmlFor="email" className="label">{t("label.email")}</label>
           <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}
                  autoComplete="email" className="field" />
         </div>
         <div>
           <div className="flex items-baseline justify-between">
-            <label htmlFor="password" className="label">Password</label>
+            <label htmlFor="password" className="label">{t("label.password")}</label>
             <Link href="/login" className="text-sm font-semibold text-brand-700 underline underline-offset-4">
-              Forgot password?
+              {t("auth.forgotPassword")}
             </Link>
           </div>
           <input id="password" type="password" value={password}
@@ -75,12 +75,12 @@ export default function LoginPage() {
         {error && <ErrorState message={error} />}
 
         <button type="submit" disabled={busy} className="btn-primary w-full text-lg">
-          {busy ? "Logging in..." : "Log in"}
+          {busy ? t("auth.loggingIn") : t("auth.login")}
         </button>
 
         <div className="flex items-center gap-3 py-1">
           <span className="h-px flex-1 bg-ink-300/40" />
-          <span className="text-sm text-ink-500">or</span>
+          <span className="text-sm text-ink-500">{t("auth.or")}</span>
           <span className="h-px flex-1 bg-ink-300/40" />
         </div>
 
@@ -91,7 +91,7 @@ export default function LoginPage() {
             <path fill="#FBBC05" d="M5.4 14.4a7.2 7.2 0 0 1 0-4.6V6.7H1.4a12 12 0 0 0 0 10.7l4-3Z"/>
             <path fill="#EA4335" d="M12 4.8c1.8 0 3.3.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.4 6.7l4 3.1C6.3 6.9 8.9 4.8 12 4.8Z"/>
           </svg>
-          Continue with Google
+          {t("auth.continueGoogle")}
         </button>
       </form>
     </AuthShell>
