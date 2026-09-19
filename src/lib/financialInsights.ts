@@ -6,8 +6,9 @@ import {
   monthsRemaining,
   getRemainingAmount,
 } from "./calculations";
+import { fillTemplate, t } from "./i18n";
 
-import type { Transaction, SavingsGoal } from "./types";
+import type { Language, Transaction, SavingsGoal } from "./types";
 
 export interface FinancialInsight {
   type: "positive" | "warning" | "info";
@@ -17,7 +18,8 @@ export interface FinancialInsight {
 
 export function generateFinancialInsights(
   transactions: Transaction[],
-  goals: SavingsGoal[] = []
+  goals: SavingsGoal[] = [],
+  lang: Language = "en",
 ): FinancialInsight[] {
   const insights: FinancialInsight[] = [];
 
@@ -26,9 +28,8 @@ export function generateFinancialInsights(
   if (summary.income === 0) {
     insights.push({
       type: "info",
-      title: "Add your income",
-      message:
-        "Add your income to receive personalized financial insights.",
+      title: t("insight.addIncome", lang),
+      message: t("insight.addIncomeMessage", lang),
     });
 
     return insights;
@@ -37,42 +38,46 @@ export function generateFinancialInsights(
   if (summary.balance < 0) {
     insights.push({
       type: "warning",
-      title: "Expenses are higher than income",
-      message:
-        "Your recorded expenses are higher than your income. Review your largest expenses and look for areas where you can reduce spending.",
+      title: t("insight.expensesHigher", lang),
+      message: t("insight.expensesHigherMessage", lang),
     });
   } else if (summary.savingsRate >= 20) {
     insights.push({
       type: "positive",
-      title: "Good saving habit",
-      message:
-        `You are currently saving ${summary.savingsRate.toFixed(1)}% of your recorded income.`,
+      title: t("insight.goodSavingHabit", lang),
+      message: fillTemplate(t("insight.goodSavingHabitMessage", lang), {
+        value: summary.savingsRate.toFixed(1),
+      }),
     });
   } else {
     insights.push({
       type: "info",
-      title: "Build your savings",
-      message:
-        "Try setting aside a small fixed amount whenever you receive income.",
+      title: t("insight.buildSavings", lang),
+      message: t("insight.buildSavingsMessage", lang),
     });
   }
 
   const topCategory = getTopExpenseCategory(transactions);
 
   if (topCategory) {
+    const categoryLabel = t(`category.${topCategory.id}` as const, lang) || topCategory.name;
     if (topCategory.percentage > 40) {
       insights.push({
         type: "warning",
-        title: `High spending: ${topCategory.name}`,
-        message:
-          `${topCategory.name} accounts for ${topCategory.percentage.toFixed(1)}% of your recorded expenses. Consider reviewing this category and looking for ways to reduce unnecessary spending.`,
+        title: fillTemplate(t("insight.highSpending", lang), { name: categoryLabel }),
+        message: fillTemplate(t("insight.highSpendingMessage", lang), {
+          name: categoryLabel,
+          value: topCategory.percentage.toFixed(1),
+        }),
       });
     } else {
       insights.push({
         type: "info",
-        title: `Highest spending: ${topCategory.name}`,
-        message:
-          `${topCategory.name} accounts for ${topCategory.percentage.toFixed(1)}% of your recorded expenses.`,
+        title: fillTemplate(t("insight.topSpending", lang), { name: categoryLabel }),
+        message: fillTemplate(t("insight.topSpendingMessage", lang), {
+          name: categoryLabel,
+          value: topCategory.percentage.toFixed(1),
+        }),
       });
     }
   }
@@ -82,9 +87,10 @@ export function generateFinancialInsights(
   if (averageExpense > 0) {
     insights.push({
       type: "info",
-      title: "Average expense",
-      message:
-        `Your average recorded expense is ₹${averageExpense.toFixed(0)}.`,
+      title: t("insight.averageExpense", lang),
+      message: fillTemplate(t("insight.averageExpenseMessage", lang), {
+        value: averageExpense.toFixed(0),
+      }),
     });
   }
 
@@ -97,25 +103,29 @@ export function generateFinancialInsights(
     if (remaining === 0) {
       insights.push({
         type: "positive",
-        title: `Goal completed: ${goal.name}`,
-        message:
-          `You have reached your savings goal of ₹${goal.targetAmount.toFixed(0)}.`,
+        title: fillTemplate(t("insight.goalCompleted", lang), { name: goal.name }),
+        message: fillTemplate(t("insight.goalCompletedMessage", lang), {
+          value: goal.targetAmount.toFixed(0),
+        }),
       });
     } else if (progress >= 75) {
       insights.push({
         type: "positive",
-        title: `Almost there: ${goal.name}`,
-        message:
-          `You have completed ${progress.toFixed(0)}% of your goal. ` +
-          `Only ₹${remaining.toFixed(0)} is remaining.`,
+        title: fillTemplate(t("insight.almostThere", lang), { name: goal.name }),
+        message: fillTemplate(t("insight.almostThereMessage", lang), {
+          value: progress.toFixed(0),
+          remaining: remaining.toFixed(0),
+        }),
       });
     } else if (months !== null) {
       insights.push({
         type: "info",
-        title: `Savings goal: ${goal.name}`,
-        message:
-          `You have completed ${progress.toFixed(0)}% of your goal. ` +
-          `₹${remaining.toFixed(0)} is remaining, which is about ${months} month${months === 1 ? "" : "s"} at your current monthly contribution.`,
+        title: fillTemplate(t("insight.goalSavings", lang), { name: goal.name }),
+        message: fillTemplate(t("insight.goalSavingsMessage", lang), {
+          value: progress.toFixed(0),
+          remaining: remaining.toFixed(0),
+          months: String(months),
+        }),
       });
     }
   }

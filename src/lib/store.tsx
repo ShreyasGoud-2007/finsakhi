@@ -119,6 +119,7 @@ const [goals, setGoals] = useState<SavingsGoal[]>([]);
     document.documentElement.classList.toggle("text-large", prefs.largeText);
     document.documentElement.classList.toggle("simple-view", prefs.simpleView);
     document.documentElement.lang = prefs.language;
+    document.title = translate("metadata.title", prefs.language);
   }, [prefs.largeText, prefs.simpleView, prefs.language]);
 
   const setPrefs = useCallback((patch: Partial<Prefs>) => {

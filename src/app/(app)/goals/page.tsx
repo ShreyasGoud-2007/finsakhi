@@ -12,35 +12,35 @@ import { useStore } from "@/lib/store";
 import type { SavingsGoal } from "@/lib/types";
 
 export default function GoalsPage() {
-  const { goals, deleteGoal, loading } = useStore();
+  const { goals, deleteGoal, loading, t, prefs } = useStore();
   const [createOpen, setCreateOpen] = useState(false);
   const [adding, setAdding] = useState<SavingsGoal | null>(null);
 
   const totalSaved = goals.reduce((s, g) => s + g.savedAmount, 0);
   const totalTarget = goals.reduce((s, g) => s + g.targetAmount, 0);
 
-  if (loading) return <LoadingState message="Loading your goals..." />;
+  if (loading) return <LoadingState message={t("label.loadingGoals")} />;
 
   return (
     <div>
       <PageHeader
-        title="Your savings goals"
-        subtitle="Small steps today can help you reach your future goals."
+        title={t("goals.pageTitle")}
+        subtitle={t("goals.subtitle")}
         actions={
           <button onClick={() => setCreateOpen(true)} className="btn-primary">
-            <Plus size={19} aria-hidden="true" /> Create goal
+            <Plus size={19} aria-hidden="true" /> {t("action.createGoal")}
           </button>
         }
       />
 
       {goals.length > 0 && (
         <div className="rounded-2xl bg-brand-700 text-white p-5 sm:p-6 mb-6">
-          <p className="text-brand-100 font-semibold">Saved across all your goals</p>
+          <p className="text-brand-100 font-semibold">{t("goals.savedAcross")}</p>
           <p className="font-display text-4xl font-extrabold tabular-nums mt-1">
             {rupees(totalSaved)}
           </p>
           <p className="text-brand-100 mt-1 tabular-nums">
-            of {rupees(totalTarget)} you are working towards
+            {t("goals.ofTarget")} {rupees(totalTarget)} {t("goals.youAreWorkingTowards")}
           </p>
         </div>
       )}
@@ -48,11 +48,11 @@ export default function GoalsPage() {
       {goals.length === 0 ? (
         <EmptyState
           icon={Target}
-          title="Start with a small goal."
-          message="An emergency fund is the best first goal. Pick an amount that feels possible, not perfect."
+          title={t("goals.startWithSmallGoal")}
+          message={t("goals.smallGoalPrompt")}
           action={
             <button onClick={() => setCreateOpen(true)} className="btn-primary">
-              Create savings goal
+              {t("action.createSavingsGoal")}
             </button>
           }
         />

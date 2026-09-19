@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { SkipLink } from "@/components/layout/SkipLink";
 import { StoreProvider } from "@/lib/store";
 import "./globals.css";
 
@@ -27,14 +28,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100]
-                     focus:rounded-xl focus:bg-brand-700 focus:px-4 focus:py-3 focus:text-white focus:font-semibold"
-        >
-          Skip to main content
-        </a>
-        <StoreProvider>{children}</StoreProvider>
+        <StoreProvider>
+          <SkipLink />
+          {children}
+        </StoreProvider>
       </body>
     </html>
   );
