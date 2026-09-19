@@ -1,3 +1,7 @@
 node_modules
 .next
 .env.local
+ml/.env
+tsconfig.tsbuildinfo
+__pycache__/
+*.pyc

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Receipt, Target } from "lucide-react";
+import { ArrowRight, Receipt, Sparkles, Target } from "lucide-react";
 import { AIInsightCard } from "@/components/dashboard/AIInsightCard";
 import { ExpenseChart } from "@/components/dashboard/ExpenseChart";
 import { QuickActions } from "@/components/dashboard/QuickActions";
@@ -46,7 +46,12 @@ const insight = insights[0]?.message ?? "Add some financial activity to receive 
           </h1>
           <p className="text-ink-700 mt-1.5 text-lg">{t("label.subtitle")}</p>
         </div>
-        <div className="hidden lg:block"><LanguageSelector compact /></div>
+        <div className="flex items-center gap-3">
+          <Link href="/ai-results" className="btn-secondary hidden sm:inline-flex">
+            <Sparkles size={17} aria-hidden="true" /> AI tools
+          </Link>
+          <div className="hidden lg:block"><LanguageSelector compact /></div>
+        </div>
       </div>
 
       <SummaryCards summary={summary} />

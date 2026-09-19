@@ -37,11 +37,12 @@ export function AssistantChat() {
   const [voiceNote, setVoiceNote] = useState<string | null>(null);
   const endRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
+  const thinkingRef = useRef(false);
 
   const ask = useCallback(
     async (text: string) => {
       const trimmed = text.trim();
-      if (!trimmed || thinking) return;
+      if (!trimmed || thinkingRef.current) return;
 
       const userMsg: Msg = {
         id: crypto.randomUUID(), role: "user",
@@ -49,6 +50,7 @@ export function AssistantChat() {
       };
       setMessages((m) => [...m, userMsg]);
       setInput("");
+      thinkingRef.current = true;
       setThinking(true);
 
       try {
@@ -64,10 +66,11 @@ export function AssistantChat() {
           createdAt: new Date().toISOString(),
         }]);
       } finally {
+        thinkingRef.current = false;
         setThinking(false);
       }
     },
-    [financialContext, prefs.language, thinking],
+    [financialContext, prefs.language],
   );
 
   // A lesson page can deep-link a question in.

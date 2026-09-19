@@ -1,23 +1,20 @@
 import type { FinancialContext, Language } from "../types";
 
-/**
- * Talks to our own server route, never to an AI provider directly.
- * The provider key stays in AI_API_KEY on the server.
- */
+/** Talks to the FastAPI service through the server-side proxy. */
 export async function sendMessage(
   message: string,
   financialContext: FinancialContext,
   language: Language,
 ): Promise<string> {
-  const res = await fetch("/api/financial-assistant", {
+  const res = await fetch("/api/ai-service/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ message, financialContext, language }),
   });
   if (!res.ok) throw new Error(`Assistant request failed (${res.status})`);
-  const data: { message?: string } = await res.json();
-  if (!data.message) throw new Error("Assistant returned an empty reply.");
-  return data.message;
+  const data: { response?: string } = await res.json();
+  if (!data.response) throw new Error("Assistant returned an empty reply.");
+  return data.response;
 }
 
 /** Builds the dashboard insight paragraph. Pure arithmetic - no AI call needed. */

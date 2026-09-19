@@ -1,0 +1,361 @@
+description,category
+rice and vegetables,food
+bought groceries,food
+milk and bread,food
+vegetables from market,food
+lunch at hotel,food
+rice purchase,food
+vegetable shopping,food
+fruits from market,food
+cooking oil,food
+dal and rice,food
+wheat flour purchase,food
+tomatoes and onions,food
+milk purchase,food
+eggs from shop,food
+fresh fruits,food
+groceries for home,food
+lentils and pulses,food
+spices for cooking,food
+potatoes and vegetables,food
+curd and milk,food
+chicken for dinner,food
+fish from market,food
+breakfast items,food
+tea and sugar,food
+flour and rice,food
+grocery shop payment,food
+weekly groceries,food
+vegetable vendor payment,food
+food items for family,food
+rice bag,food
+cooking ingredients,food
+snacks for children,food
+fruit vendor payment,food
+market food purchase,food
+monthly ration,food
+edible oil purchase,food
+pulses purchase,food
+bread and biscuits,food
+milk packet,food
+vegetable stall payment,food
+bus ticket,transport
+auto fare,transport
+bus travel,transport
+petrol for bike,transport
+train ticket,transport
+rickshaw fare,transport
+fuel purchase,transport
+taxi ride,transport
+school bus fare,transport
+bike petrol,transport
+bus fare to market,transport
+auto to hospital,transport
+transport fare,transport
+petrol station payment,transport
+shared auto fare,transport
+bus pass,transport
+train journey,transport
+auto ride home,transport
+fuel for motorcycle,transport
+travel to town,transport
+bus fare for work,transport
+rickshaw to market,transport
+taxi to station,transport
+petrol refill,transport
+transportation expense,transport
+bus ticket to village,transport
+auto fare to school,transport
+bike fuel,transport
+local bus payment,transport
+travel expense,transport
+bus ride,transport
+auto ride,transport
+petrol purchase,transport
+train fare,transport
+vehicle fuel,transport
+market travel fare,transport
+hospital travel fare,transport
+work travel fare,transport
+town bus ticket,transport
+cycle repair transport,transport
+school books,education
+school uniform,education
+college fees,education
+notebooks for school,education
+school bag,education
+tuition fees,education
+exam fees,education
+educational supplies,education
+pens and pencils,education
+textbooks purchase,education
+school shoes,education
+children school fees,education
+coaching class fees,education
+school stationery,education
+drawing materials,education
+school admission fee,education
+college admission fee,education
+library fee,education
+online class fee,education
+study materials,education
+exam application fee,education
+school workbook,education
+educational books,education
+calculator for studies,education
+school project materials,education
+student transport pass,education
+tuition payment,education
+school annual fee,education
+college semester fee,education
+children notebooks,education
+school stationery purchase,education
+pen purchase for school,education
+school art supplies,education
+learning materials,education
+education payment,education
+computer class fee,education
+vocational training fee,education
+school activity fee,education
+student uniform,education
+school supplies,education
+doctor consultation,healthcare
+medicine from pharmacy,healthcare
+hospital bill,healthcare
+medical checkup,healthcare
+doctor fee,healthcare
+medical test,healthcare
+pharmacy purchase,healthcare
+clinic visit,healthcare
+prescription medicines,healthcare
+blood test,healthcare
+health checkup,healthcare
+hospital consultation,healthcare
+medicine payment,healthcare
+dental treatment,healthcare
+eye checkup,healthcare
+injection fee,healthcare
+lab test payment,healthcare
+medical scan,healthcare
+health clinic bill,healthcare
+tablets from pharmacy,healthcare
+doctor appointment fee,healthcare
+hospital medicine,healthcare
+medical examination,healthcare
+dental checkup,healthcare
+spectacles for health,healthcare
+pharmacy bill,healthcare
+clinic treatment,healthcare
+medical report test,healthcare
+health screening,healthcare
+fever medicine,healthcare
+medical treatment,healthcare
+hospital visit,healthcare
+doctor consultation fee,healthcare
+medicine purchase,healthcare
+laboratory test,healthcare
+healthcare expense,healthcare
+medical emergency bill,healthcare
+clinic medicine,healthcare
+health test,healthcare
+prescribed drugs,healthcare
+household items,household
+cleaning supplies,household
+gas cylinder,household
+kitchen items,household
+house cleaning products,household
+water storage container,household
+broom and mop,household
+bucket purchase,household
+plates and utensils,household
+cooking vessel,household
+bed sheet for home,household
+household cleaning liquid,household
+kitchen container,household
+plastic buckets,household
+mosquito net,household
+home maintenance items,household
+light bulb for home,household
+storage box,household
+washing soap,household
+dishwashing liquid,household
+floor cleaner,household
+bathroom cleaning items,household
+kitchen utensils,household
+pressure cooker,household
+water bottle for home,household
+household repair items,household
+curtain for home,household
+mat for house,household
+home supplies,household
+cleaning powder,household
+dustpan purchase,household
+mop purchase,household
+gas refill,household
+kitchen storage containers,household
+household soap,household
+home utility items,household
+bedding purchase,household
+household maintenance,household
+home cleaning expense,household
+utensils for kitchen,household
+fertilizer purchase,agriculture
+seeds for farm,agriculture
+pesticide purchase,agriculture
+farm equipment,agriculture
+crop fertilizer,agriculture
+agriculture tools,agriculture
+farming supplies,agriculture
+tractor rental,agriculture
+irrigation expense,agriculture
+farm seeds,agriculture
+fertilizer for crop,agriculture
+pesticide for crops,agriculture
+harvesting tools,agriculture
+farm labor payment,agriculture
+ploughing expense,agriculture
+field preparation cost,agriculture
+crop protection medicine,agriculture
+seed purchase,agriculture
+agricultural equipment,agriculture
+farm machinery rental,agriculture
+water pump repair for farm,agriculture
+irrigation pipe purchase,agriculture
+crop harvesting expense,agriculture
+fertilizer bag,agriculture
+vegetable seeds,agriculture
+farm transport expense,agriculture
+livestock feed,agriculture
+cattle feed,agriculture
+cow medicine,agriculture
+goat feed,agriculture
+farm tool purchase,agriculture
+sprayer purchase,agriculture
+crop storage expense,agriculture
+agriculture labor,agriculture
+field work payment,agriculture
+farm maintenance,agriculture
+drip irrigation supplies,agriculture
+nursery plants,agriculture
+farming material,agriculture
+crop treatment expense,agriculture
+new clothes,shopping
+bought saree,shopping
+shoes purchase,shopping
+dress shopping,shopping
+clothes purchase,shopping
+handbag purchase,shopping
+shirt purchase,shopping
+children clothes,shopping
+sandals purchase,shopping
+new dress,shopping
+saree for festival,shopping
+clothing for family,shopping
+school bag shopping,shopping
+slippers purchase,shopping
+jacket purchase,shopping
+trousers purchase,shopping
+women clothing,shopping
+men clothing,shopping
+kids clothing,shopping
+festival shopping,shopping
+clothes from shop,shopping
+footwear purchase,shopping
+new sandals,shopping
+clothes for wedding,shopping
+traditional dress,shopping
+shopping for clothes,shopping
+shirt and pants,shopping
+dress for child,shopping
+saree purchase,shopping
+clothing items,shopping
+handbag from shop,shopping
+wallet purchase,shopping
+belt purchase,shopping
+footwear shopping,shopping
+festival clothes,shopping
+new shirt,shopping
+new trousers,shopping
+kids shoes,shopping
+clothing shopping,shopping
+personal shopping,shopping
+electricity bill,bills
+water bill,bills
+mobile recharge,bills
+internet bill,bills
+phone bill,bills
+electricity payment,bills
+utility bill,bills
+gas connection bill,bills
+mobile phone recharge,bills
+electricity charges,bills
+water charges,bills
+telephone bill,bills
+internet recharge,bills
+monthly electricity payment,bills
+mobile balance recharge,bills
+electricity dues,bills
+water payment,bills
+phone recharge,bills
+broadband bill,bills
+utility payment,bills
+electricity service bill,bills
+mobile recharge payment,bills
+internet charges,bills
+water supply bill,bills
+telephone recharge,bills
+monthly phone bill,bills
+home internet payment,bills
+power bill,bills
+water utility payment,bills
+mobile data recharge,bills
+electricity connection payment,bills
+internet subscription,bills
+phone service payment,bills
+utility charges,bills
+power payment,bills
+water bill payment,bills
+mobile plan recharge,bills
+internet bill payment,bills
+house electricity bill,bills
+communication bill,bills
+unknown payment,other
+cash payment,other
+miscellaneous expense,other
+general payment,other
+unidentified expense,other
+miscellaneous purchase,other
+other expense,other
+small cash expense,other
+payment to unknown shop,other
+unclassified payment,other
+random expense,other
+general household payment,other
+cash withdrawal expense,other
+unrecorded purchase,other
+miscellaneous spending,other
+payment not categorized,other
+unknown shop payment,other
+other transaction,other
+cash spending,other
+unexpected expense,other
+general spending,other
+unclear payment,other
+miscellaneous transaction,other
+unidentified purchase,other
+other payment,other
+cash purchase,other
+expense to classify,other
+unknown expense,other
+miscellaneous cash payment,other
+general transaction,other
+uncategorized spending,other
+payment details unknown,other
+miscellaneous bill,other
+other spending,other
+cash expense,other
+unrecognized payment,other
+small miscellaneous purchase,other
+general expense,other
+unknown transaction,other
+unclear expense,other

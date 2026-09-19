@@ -7,11 +7,7 @@ const supabasePublishableKey =
 export const isSupabaseConfigured =
   Boolean(supabaseUrl && supabasePublishableKey);
 
-if (!isSupabaseConfigured) {
-  throw new Error("Missing Supabase environment variables");
-}
-
 export const supabase = createClient(
-  supabaseUrl!,
-  supabasePublishableKey!
+  supabaseUrl ?? "https://preview-placeholder.supabase.co",
+  supabasePublishableKey ?? "preview-placeholder-key"
 );
